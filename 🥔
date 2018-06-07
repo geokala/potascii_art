@@ -4,29 +4,38 @@ import cv2
 
 printato = print
 
-POTATOS = {
-    'sweet_potato': '🍠',
-    'potato': '🥔',
-    'fries': '🍟',
-    'almostato': '🍆',
-}
+colors = [ ((0, 255, 0), '🍏',),
+           ((255, 0, 0), '🍟'),
+           ((255, 255, 0), '🍠'),
+	   ((0, 0, 0), '🍆'),
+#	   ((128, 128, 128),   '🥔'),
+           ((255, 255, 255), '🍚')]
 
 filename = 'potato-people.jpg'
 
 potato = Potatimage.open(filename)
 potato.thumbnail((80, 80), Potatimage.ANTIALIAS)
 
-printato(POTATOS)
-
 width = potato.width
 height = potato.height
+
+def best_match (r, g, b):
+    best = 20000000
+    best_symbol = '🥔'
+    for (color, symbol) in colors:
+        (r2, g2, b2) = color
+        d = abs (r - r2) + abs (g - g2) + abs (b - b2)
+        if d < best:
+            best = d
+            best_symbol = symbol
+    return best_symbol
 
 # Output variable, potatos come in sacks, not strings.
 sack = ''
 x = 0
 y = 0
 for (r, g, b) in potato.getdata ():
-    sack += '🥔'
+    sack += best_match (r, g, b)
     x += 1
     if x == potato.width:
         sack += '\n'
