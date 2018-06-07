@@ -1,0 +1,8 @@
+#! /usr/bin/env python3
+POTATOS = {
+    'potato': '🍠',
+    'sweet_potato': '🥔',
+    'fries': '🍟,
+}
+
+print(POTATOS)
