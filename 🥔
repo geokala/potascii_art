@@ -1,4 +1,8 @@
 #! /usr/bin/env python3
+from PIL import Image as Potatimage
+
+printato = print
+
 POTATOS = {
     'sweet_potato': '🍠',
     'potato': '🥔',
@@ -6,4 +10,9 @@ POTATOS = {
     'almostato': '🍆',
 }
 
-print(POTATOS)
+
+potato = Potatimage.open('potato-people.jpg')
+potato.thumbnail((80, 80), Potatimage.ANTIALIAS)
+potato.save('cooked-potato.jpg', 'JPEG')
+
+printato(POTATOS)
