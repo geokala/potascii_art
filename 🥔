@@ -2,7 +2,8 @@
 POTATOS = {
     'sweet_potato': '🍠',
     'potato': '🥔',
-    'fries': '🍟,
+    'fries': '🍟',
+    'almostato': '🍆',
 }
 
 print(POTATOS)
