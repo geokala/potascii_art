@@ -16,3 +16,8 @@ potato.thumbnail((80, 80), Potatimage.ANTIALIAS)
 potato.save('cooked-potato.jpg', 'JPEG')
 
 printato(POTATOS)
+
+# Output variable, potatos come in sacks, not strings.
+sack = ''
+
+printato(sack)
