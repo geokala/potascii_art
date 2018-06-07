@@ -64,11 +64,16 @@ im = Potatimage.open (filename)
 width = int (im.width * scale)
 height = int (im.height * scale)
 
-def in_face (x, y):
+def in_face (x, y, c):
     for (face_x, face_y, width, height) in ascii_faces:
         if x >= face_x and x < face_x + width and y >= face_y and y < face_y + height:
-            return True
-    return False
+            if x - face_x == 1 and y - face_y == 1:
+                return '👁️ '
+            elif x - face_x == width - 2 and y - face_y == 1:
+                return '👁️ '
+            else:
+                return '🥔'
+    return c
 
 x = 0
 y = 0
@@ -80,9 +85,6 @@ for c in sack:
         out_sack += '\n'
     else:
         x += 1
-        if in_face (x, y):
-            out_sack += '🥔'
-        else:
-            out_sack += c
+        out_sack += in_face (x, y, c)
 
 printato (out_sack)
