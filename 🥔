@@ -54,17 +54,19 @@ scale = 1 / 10
 
 ascii_faces = []
 for (x, y, width, height) in faces:
-    x2 = int ((x + width / 2) * scale)
-    y2 = int ((y + height / 2) * scale)
-    ascii_faces.append ((x2, y2))
+    x2 = int (x * scale)
+    y2 = int (y * scale)
+    width2 = int (width * scale)
+    height2 = int (height * scale)
+    ascii_faces.append ((x2, y2, width2, height2))
 
 im = Potatimage.open (filename)
 width = int (im.width * scale)
 height = int (im.height * scale)
 
-def is_face (x, y):
-    for (face_x, face_y) in ascii_faces:
-        if (x, y) == (face_x, face_y):
+def in_face (x, y):
+    for (face_x, face_y, width, height) in ascii_faces:
+        if x >= face_x and x < face_x + width and y >= face_y and y < face_y + height:
             return True
     return False
 
@@ -78,8 +80,8 @@ for c in sack:
         out_sack += '\n'
     else:
         x += 1
-        if is_face (x, y):
-            out_sack += '😂'
+        if in_face (x, y):
+            out_sack += '🥔'
         else:
             out_sack += c
 
