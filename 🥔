@@ -15,7 +15,6 @@ filename = 'potato-people.jpg'
 
 potato = Potatimage.open(filename)
 potato.thumbnail((80, 80), Potatimage.ANTIALIAS)
-potato.save('cooked-potato.jpg', 'JPEG')
 
 printato(POTATOS)
 
@@ -24,10 +23,15 @@ height = potato.height
 
 # Output variable, potatos come in sacks, not strings.
 sack = ''
-for y in range (height):
-    for x in range (width):
-        sack += '🥔'
-    sack += '\n'
+x = 0
+y = 0
+for (r, g, b) in potato.getdata ():
+    sack += '🥔'
+    x += 1
+    if x == potato.width:
+        sack += '\n'
+        x = 0
+        y += 1
 
 image = cv2.imread (filename)
 gray = cv2.cvtColor (image, cv2.COLOR_BGR2GRAY)
