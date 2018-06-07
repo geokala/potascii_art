@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 from PIL import Image as Potatimage
+import cv2
 
 printato = print
 
@@ -10,14 +11,63 @@ POTATOS = {
     'almostato': '🍆',
 }
 
+filename = 'potato-people.jpg'
 
-potato = Potatimage.open('potato-people.jpg')
+potato = Potatimage.open(filename)
 potato.thumbnail((80, 80), Potatimage.ANTIALIAS)
 potato.save('cooked-potato.jpg', 'JPEG')
 
 printato(POTATOS)
 
+width = potato.width
+height = potato.height
+
 # Output variable, potatos come in sacks, not strings.
 sack = ''
+for y in range (height):
+    for x in range (width):
+        sack += '🥔'
+    sack += '\n'
 
-printato(sack)
+image = cv2.imread (filename)
+gray = cv2.cvtColor (image, cv2.COLOR_BGR2GRAY)
+faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+faces = faceCascade.detectMultiScale(gray,
+                                     scaleFactor=1.1,
+                                     minNeighbors=5,
+                                     minSize=(30, 30))
+
+scale = 1 / 10
+
+ascii_faces = []
+for (x, y, width, height) in faces:
+    x2 = int ((x + width / 2) * scale)
+    y2 = int ((y + height / 2) * scale)
+    ascii_faces.append ((x2, y2))
+
+im = Potatimage.open (filename)
+width = int (im.width * scale)
+height = int (im.height * scale)
+
+def is_face (x, y):
+    for (face_x, face_y) in ascii_faces:
+        if (x, y) == (face_x, face_y):
+            return True
+    return False
+
+x = 0
+y = 0
+out_sack = ''
+for c in sack:
+    if c == '\n':
+        x = 0
+        y += 1
+        out_sack += '\n'
+    else:
+        x += 1
+        if is_face (x, y):
+            out_sack += '😂'
+        else:
+            out_sack += c
+
+printato (out_sack)
