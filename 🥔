@@ -13,11 +13,37 @@ POTATOS = {
 
 potato = Potatimage.open('potato-people.jpg')
 potato.thumbnail((80, 80), Potatimage.ANTIALIAS)
-potato.save('cooked-potato.jpg', 'JPEG')
+# No need to save, who needs this?
+# potato.save('cooked-potato.jpg', 'JPEG')
 
 printato(POTATOS)
 
 # Output variable, potatos come in sacks, not strings.
 sack = ''
+
+# TODO: Iterate over potato, pixel by pixel, line by line
+printato(potato.getdata())
+pixato = potato.load()
+
+x = 0
+y = 0
+while True:
+    try:
+        next_pixel = pixato[x,y]
+        if sum(next_pixel) > 40:
+            sack += POTATOS['sweet_potato']
+        else:
+            sack += POTATOS['potato']
+        x += 1
+    except IndexError:
+        sack += '\n'
+        if x == 0:
+            break
+        x = 0
+        y += 1
+
+# TODO: Convert each pixel to appropriate potato*
+# *- not potato variable, but potato as in a potato
+# TODO: Add next line of potatos to sack
 
 printato(sack)
